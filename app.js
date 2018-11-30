@@ -23,10 +23,3 @@ var heat = L.heatLayer(testData, {
   blur: 50,
   maxZoom: 1
 }).addTo(myMap)
-
-var corner1 = L.latLng(36.136929, -78.762172),
-  corner2 = L.latLng(35.866725 , -79.007650),
-  bounds = L.latLngBounds(corner1, corner2);
-
-L.rectangle(bounds, {color: "#f44242", weight: 1}).addTo(myMap)
-console.log(bounds)
