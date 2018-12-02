@@ -1,4 +1,4 @@
-import request from superagent 
+import request from 'superagent'
 
 let myMap = L.map('mapid').setView([35.9940, -78.8986], 3)
 
@@ -15,25 +15,18 @@ let heat = L.heatLayer([], {
   maxZoom: 1
 }).addTo(myMap)
 
-   const mapBounds = myMap.getBounds()
-   request.get('kiwi-book.glitch.me/data', {
-     params: {
-       lat1: mapBounds.getSouth(),
-       lat2: mapBounds.getNorth(),
-       lng1: mapBounds.getWest(),
-       lng2: mapBounds.getEast()
-     }
-   })
-   .then( function (res) {
-     return res.body 
-   })
-   let testData = []
-   .then( function (body) {
-     heat.setLatLngs($(data.ipblocks).each(function (idx, val) {
-       let arr = []
-       arr.push(val.lat, val.lng, val.intensity)
-       testData.push(arr)
-     }))
-   })
- 
-
+const mapBounds = myMap.getBounds()
+request.get('https://kiwi-book.glitch.me/data')
+  .query({
+      lat1: mapBounds.getSouth(),
+      lat2: mapBounds.getNorth(),
+      lng1: mapBounds.getWest(),
+      lng2: mapBounds.getEast()
+    })
+  .then(function (res) {
+    return res.body
+  })
+  .then(function (body) {
+    console.log(body.datapoints)
+    heat.setLatLngs(body.datapoints.map(val => [val[0], val[1], (val[2] / 100)]))
+  })
