@@ -2177,7 +2177,6 @@ _superagent2.default.get('https://kiwi-book.glitch.me/data').query({
 }).then(function (res) {
   return res.body;
 }).then(function (body) {
-  console.log(body.datapoints);
   heat.setLatLngs(body.datapoints.map(function (val) {
     return [val[0], val[1], val[2] / 100];
   }));

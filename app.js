@@ -27,6 +27,5 @@ request.get('https://kiwi-book.glitch.me/data')
     return res.body
   })
   .then(function (body) {
-    console.log(body.datapoints)
     heat.setLatLngs(body.datapoints.map(val => [val[0], val[1], (val[2] / 100)]))
   })
