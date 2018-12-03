@@ -15,6 +15,7 @@ let heat = L.heatLayer([], {
   maxZoom: 1
 }).addTo(myMap)
 
+function getMapBounds () {
 const mapBounds = myMap.getBounds()
 request.get('https://kiwi-book.glitch.me/data')
   .query({
@@ -29,3 +30,9 @@ request.get('https://kiwi-book.glitch.me/data')
   .then(function (body) {
     heat.setLatLngs(body.datapoints.map(val => [val[0], val[1], (val[2] / 100)]))
   })
+}
+
+myMap.on('viewreset', getMapBounds, 'viewreset')
+myMapy.on('dragend', getMapBounds, 'dragend')
+
+getMapBounds()
